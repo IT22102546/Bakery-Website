@@ -3,7 +3,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import path from 'path'
+import authRoute from "./routes/auth.route.js";
+//import userRoute from "./routes/user.route.js";
 
 
 dotenv.config();
@@ -14,7 +15,7 @@ mongoose.connect(process.env.MONGO).then(()=>{
     console.log(err);
 });
 
-const __dirname = path.resolve();
+
 
 
 const app = express();
@@ -31,6 +32,9 @@ const corsOptions = {
     credentials: true, 
 };
 app.use(cors(corsOptions));
+
+app.use("/api/auth",authRoute);
+//app.use("/api/user",userRoute); 
 
 app.use((err,req,res,next)=>{
     const statusCode = err.statusCode || 500;
